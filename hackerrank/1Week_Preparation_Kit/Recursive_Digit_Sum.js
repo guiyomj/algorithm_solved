@@ -13,7 +13,7 @@ process.stdin.on('data', function(inputStdin) {
 });
 
 process.stdin.on('end', function() {
-    inputString = inputString.split('n');
+    inputString = inputString.split('\n');
 
     main();
 });
@@ -22,27 +22,32 @@ function readLine() {
     return inputString[currentLine++];
 }
 
+/*
+ * Complete the 'superDigit' function below.
+ *
+ * The function is expected to return an INTEGER.
+ * The function accepts following parameters:
+ *  1. STRING n
+ *  2. INTEGER k
+ */
 
-  Complete the 'superDigit' function below.
- 
-  The function is expected to return an INTEGER.
-  The function accepts following parameters
-   1. STRING n
-   2. INTEGER k
- 
+const calcDigit = num => {
+    num = String(num).split('')
+    return num.reduce((a, b) => a + Number(b), 0)
+}
 
 function superDigit(n, k) {
-    n = String(n).repeat(k)
-    while (n.length  1) {
-        n = String(n.split('').reduce((a, b) = a + Number(b), 0))
+    n = calcDigit(n) * k
+    while (n > 10) {
+        n = calcDigit(n)
     }
-    return Number(n)
+    return n
 }
 
 function main() {
     const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
 
-    const firstMultipleInput = readLine().replace(s+$g, '').split(' ');
+    const firstMultipleInput = readLine().replace(/\s+$/g, '').split(' ');
 
     const n = firstMultipleInput[0];
 
@@ -50,7 +55,7 @@ function main() {
 
     const result = superDigit(n, k);
 
-    ws.write(result + 'n');
+    ws.write(result + '\n');
 
     ws.end();
 }
